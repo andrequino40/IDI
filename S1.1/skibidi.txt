@@ -1,0 +1,21 @@
+GLuint VBO1; // variable on guardarem l’identificador del VBO
+glGenBuffers (1, &VBO1); // generació de l’identificador
+glBindBuffer (GL_ARRAY_BUFFER, VBO1); // activació del VBO
+
+només un VBO actiu per editar a la vegada
+
+OMPLIR DADES VBO
+Envia les dades que es troben en data per a què siguin emmagatzemades a la
+GPU
+
+Ex:
+glBufferData (GL_ARRAY_BUFFER, sizeof (Verts), Verts, GL_STATIC_DRAW);
+
+void glBufferData (GLenum target, GLsizeiptr size,
+const GLvoid *data, GLenum usage);
+
+- target : tipus de buffer de la GPU que s’usarà (GL_ARRAY_BUFFER, …)
+- size : mida en bytes de les dades
+- data : apuntador a les dades
+- usage : patró d’ús esperat per a aquestes dades (GL_STATIC_DRAW,
+GL_DYNAMIC_DRAW, …)
