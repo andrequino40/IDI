@@ -89,6 +89,11 @@ void MyGLWidget::creaBuffers ()
   glBindVertexArray(0);
 }
 
+void MyGLWidget::creaBuffersTaulada ()
+{
+
+}
+
 void MyGLWidget::carregaShaders()
 {
   // Creem els shaders per al fragment shader i el vertex shader
