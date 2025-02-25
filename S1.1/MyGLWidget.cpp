@@ -20,7 +20,7 @@ void MyGLWidget::initializeGL ()
   // Cal inicialitzar l'ús de les funcions d'OpenGL
   initializeOpenGLFunctions();
   
-  glClearColor (0.5, 0.7, 1.0, 1.0); // defineix color de fons (d'esborrat)
+  glClearColor (0.9, 0.9, 0.0, 1.0); // defineix color de fons (d'esborrat)
   carregaShaders();
   creaBuffers();
 }
@@ -60,7 +60,7 @@ void MyGLWidget::resizeGL (int w, int h)
 void MyGLWidget::creaBuffers ()
 {
   glm::vec3 Vertices[3];  // Tres vèrtexs amb X, Y i Z
-  Vertices[0] = glm::vec3(-1.0, -1.0, 0.0);
+  Vertices[0] = glm::vec3(-2.0, -1.0, 0.0);
   Vertices[1] = glm::vec3(1.0, -1.0, 0.0);
   Vertices[2] = glm::vec3(0.0, 1.0, 0.0);
   
