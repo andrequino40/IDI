@@ -24,7 +24,7 @@ class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
     virtual void resizeGL (int width, int height);  
 
   private:
-    void creaBuffers ();
+    void creaBuffersCasa ();
     void creaBuffersTaulada ();
     void carregaShaders ();
     
