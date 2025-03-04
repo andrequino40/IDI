@@ -1,9 +1,12 @@
 #version 330 core
 
 out vec4 FragColor;
+in vec3 freak;
 
 void main() {
-    FragColor = vec4(0, 0, 0, 1);
+    FragColor = vec4(freak*2, 1.0);
+    return;
+
     int vecy = (int)gl_FragCoord.y;
     int num = 15;
     if (vecy % num > (num/2)) {

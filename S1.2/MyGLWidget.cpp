@@ -77,6 +77,20 @@ void MyGLWidget::creaBuffers ()
   glVertexAttribPointer(vertexLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(vertexLoc);
 
+  //VBO2 
+  glm::vec3 Colors[3];
+  Colors[0] = glm::vec3(1.0, 0.0, 0.0);
+  Colors[1] = glm::vec3(0.0, 1.0, 0.0);
+  Colors[2] = glm::vec3(0.0, 0.0, 1.0);
+   // Creació del buffer amb les dades dels vèrtexs
+  GLuint VBO2;
+  glGenBuffers(1  , &VBO2);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(Colors), Colors, GL_STATIC_DRAW);
+  // Activem l'atribut que farem servir per vèrtex (només el 0 en aquest cas)	
+  glVertexAttribPointer(colorLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
+  glEnableVertexAttribArray(colorLoc);
+
   // Desactivem el VAO
   glBindVertexArray(0);
 }
@@ -101,4 +115,5 @@ void MyGLWidget::carregaShaders()
 
   // Obtenim identificador per a l'atribut “vertex” del vertex shader
   vertexLoc = glGetAttribLocation (program->programId(), "vertex");
+  colorLoc = glGetAttribLocation (program->programId(), "color");
 }
