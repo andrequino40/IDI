@@ -31,6 +31,8 @@ void MyGLWidget::initializeGL ()
 void MyGLWidget::modelTranslate () {
   glm::mat4 TG (1.0); // Matriu de transformació, inicialment identitat
   TG = glm::translate (TG, glm::vec3 (movx, movy, 0.0));
+  TG = glm::rotate (TG, (float)glm::radians(direction), glm::vec3 (0.0, 0.0, -1.0));
+
   glUniformMatrix4fv (transLoc, 1, GL_FALSE, &TG[0][0]);
 }
 
@@ -44,6 +46,15 @@ void MyGLWidget::keyPressEvent (QKeyEvent *e) {
       break;
     case Qt::Key_D :
       scl -= 0.05;
+      glUniform1f (varLoc, scl);
+      break;
+    // rotation
+    case Qt::Key_Q :
+      direction -= 2.0;
+      glUniform1f (varLoc, scl);
+      break;
+    case Qt::Key_E :
+      direction += 2.0;
       glUniform1f (varLoc, scl);
       break;
     // position

@@ -46,5 +46,6 @@ class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
     float scl = 0.5;
     GLuint VAO1;
     GLint ample, alt;
+    float direction = 0.45;
     float movx = 0, movy = 0;
 };
