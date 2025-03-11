@@ -51,11 +51,9 @@ void MyGLWidget::keyPressEvent (QKeyEvent *e) {
     // rotation
     case Qt::Key_Q :
       direction -= 2.0;
-      glUniform1f (varLoc, scl);
       break;
     case Qt::Key_E :
       direction += 2.0;
-      glUniform1f (varLoc, scl);
       break;
     // position
     case Qt::Key_Left :
