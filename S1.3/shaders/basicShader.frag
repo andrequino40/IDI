@@ -4,8 +4,8 @@ out vec4 FragColor;
 in vec3 freak;
 
 void main() {
-    FragColor = vec4(freak*10, 1.0);
-    return;
+    // FragColor = vec4(freak, 1.0);
+    // return;
 
     int vecy = (int)gl_FragCoord.y;
     int num = 15;

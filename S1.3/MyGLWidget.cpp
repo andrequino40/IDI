@@ -20,9 +20,28 @@ void MyGLWidget::initializeGL ()
   // Cal inicialitzar l'ús de les funcions d'OpenGL
   initializeOpenGLFunctions();
   
+  
   glClearColor (0.5, 0.7, 1.0, 1.0); // defineix color de fons (d'esborrat)
   carregaShaders();
   creaBuffers();
+  scl = 0.5;
+  glUniform1f(varLoc, scl);
+}
+
+void MyGLWidget::keyPressEvent (QKeyEvent *e) {
+  makeCurrent ();
+  switch ( e->key() ) {
+    case Qt::Key_S :
+    scl += 0.1;
+    glUniform1f (varLoc, scl);
+    break;
+    case Qt::Key_D :
+    scl -= 0.1;
+    glUniform1f (varLoc, scl);
+    break;
+    default: e->ignore (); // propagar al pare
+    }
+  update ();
 }
 
 void MyGLWidget::paintGL ()
@@ -114,6 +133,8 @@ void MyGLWidget::carregaShaders()
   program->bind();
 
   // Obtenim identificador per a l'atribut “vertex” del vertex shader
+  varLoc = glGetUniformLocation(program->programId(), "val");
+  
   vertexLoc = glGetAttribLocation (program->programId(), "vertex");
   colorLoc = glGetAttribLocation (program->programId(), "color");
 }
