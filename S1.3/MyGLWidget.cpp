@@ -62,16 +62,20 @@ void MyGLWidget::keyPressEvent (QKeyEvent *e) {
       break;
     // position
     case Qt::Key_Left :
-      movx -= 0.1;
+      movx -= 0.5;
+      direction += 45;
       break;
     case Qt::Key_Right :
-      movx += 0.1;
+      movx += 0.5;
+      direction += 45;
       break;
     case Qt::Key_Down :
-      movy -= 0.1;
+      movy -= 0.5;
+      direction += 45;
       break;
     case Qt::Key_Up :
-      movy += 0.1;
+      movy += 0.5;
+      direction += 45;
       break;
     default: e->ignore (); // propagar al pare
     }
