@@ -30,8 +30,8 @@ void MyGLWidget::initializeGL ()
 
 void MyGLWidget::modelTranslate () {
   glm::mat4 TG (1.0); // Matriu de transformació, inicialment identitat
-  TG = glm::translate (TG, glm::vec3 (movx, movy, 0.0));
   TG = glm::rotate (TG, (float)glm::radians(direction), glm::vec3 (0.0, 0.0, -1.0));
+  TG = glm::translate (TG, glm::vec3 (movx, movy, 0.0));
 
   glUniformMatrix4fv (transLoc, 1, GL_FALSE, &TG[0][0]);
 }
