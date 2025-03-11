@@ -3,6 +3,7 @@
 #include <QOpenGLShader>
 #include <QOpenGLShaderProgram>
 #include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include <QKeyEvent>
 
@@ -27,6 +28,8 @@ class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 
     virtual void keyPressEvent ( QKeyEvent * e );
 
+    void modelTranslate (); 
+
   private:
     void creaBuffers ();
     void carregaShaders ();
@@ -34,6 +37,7 @@ class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
     GLuint varLoc;
     GLuint vertexLoc;
     GLuint colorLoc;
+    GLuint transLoc;
 
     
     // Program
@@ -42,4 +46,5 @@ class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
     float scl = 0.5;
     GLuint VAO1;
     GLint ample, alt;
+    float movx = 0, movy = 0;
 };

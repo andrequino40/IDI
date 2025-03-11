@@ -5,8 +5,9 @@ in vec3 color;
 out vec3 freak;
 
 uniform float val = 0.5;
+uniform mat4 TS;
 
 void main()  {
     freak = color;
-    gl_Position = vec4 (vertex * val, 1.0);
+    gl_Position = TS * vec4 (vertex * val, 1.0);
 }

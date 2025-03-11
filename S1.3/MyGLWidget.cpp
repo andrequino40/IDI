@@ -28,17 +28,37 @@ void MyGLWidget::initializeGL ()
   glUniform1f(varLoc, scl);
 }
 
+void MyGLWidget::modelTranslate () {
+  glm::mat4 TG (1.0); // Matriu de transformació, inicialment identitat
+  TG = glm::translate (TG, glm::vec3 (movx, movy, 0.0));
+  glUniformMatrix4fv (transLoc, 1, GL_FALSE, &TG[0][0]);
+}
+
 void MyGLWidget::keyPressEvent (QKeyEvent *e) {
   makeCurrent ();
   switch ( e->key() ) {
+    // scale
     case Qt::Key_S :
-    scl += 0.1;
-    glUniform1f (varLoc, scl);
-    break;
+      scl += 0.05;
+      glUniform1f (varLoc, scl);
+      break;
     case Qt::Key_D :
-    scl -= 0.1;
-    glUniform1f (varLoc, scl);
-    break;
+      scl -= 0.05;
+      glUniform1f (varLoc, scl);
+      break;
+    // position
+    case Qt::Key_Left :
+      movx -= 0.1;
+      break;
+    case Qt::Key_Right :
+      movx += 0.1;
+      break;
+    case Qt::Key_Down :
+      movy -= 0.1;
+      break;
+    case Qt::Key_Up :
+      movy += 0.1;
+      break;
     default: e->ignore (); // propagar al pare
     }
   update ();
@@ -52,6 +72,8 @@ void MyGLWidget::paintGL ()
   
   glClear (GL_COLOR_BUFFER_BIT);  // Esborrem el frame-buffer
 
+  // funcion transformación
+    modelTranslate();
   // Activem l'Array a pintar 
   glBindVertexArray(VAO1);
  
@@ -134,7 +156,7 @@ void MyGLWidget::carregaShaders()
 
   // Obtenim identificador per a l'atribut “vertex” del vertex shader
   varLoc = glGetUniformLocation(program->programId(), "val");
-  
+  transLoc = glGetUniformLocation(program->programId(), "TS");
   vertexLoc = glGetAttribLocation (program->programId(), "vertex");
   colorLoc = glGetAttribLocation (program->programId(), "color");
 }
