@@ -43,7 +43,7 @@ class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
     // Program
     QOpenGLShaderProgram *program;
 
-    float scl = 0.5;
+    float scl = 1;
     GLuint VAO1;
     GLint ample, alt;
     float direction = 0.45;

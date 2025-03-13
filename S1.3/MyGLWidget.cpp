@@ -24,14 +24,13 @@ void MyGLWidget::initializeGL ()
   glClearColor (0.5, 0.7, 1.0, 1.0); // defineix color de fons (d'esborrat)
   carregaShaders();
   creaBuffers();
-  scl = 0.5;
-  glUniform1f(varLoc, scl);
 }
 
 void MyGLWidget::modelTranslate () {
   glm::mat4 TG (1.0); // Matriu de transformació, inicialment identitat
   TG = glm::rotate (TG, (float)glm::radians(direction), glm::vec3 (0.0, 0.0, -1.0));
   TG = glm::translate (TG, glm::vec3 (movx, movy, 0.0));
+  TG = glm::scale (TG, glm::vec3 (sqrt(scl), 1.0/log(scl), 0));
 
   glUniformMatrix4fv (transLoc, 1, GL_FALSE, &TG[0][0]);
 }
@@ -42,11 +41,11 @@ void MyGLWidget::keyPressEvent (QKeyEvent *e) {
     // scale
     case Qt::Key_S :
       scl += 0.05;
-      glUniform1f (varLoc, scl);
+      // glUniform1f (varLoc, scl);
       break;
     case Qt::Key_D :
       scl -= 0.05;
-      glUniform1f (varLoc, scl);
+      // glUniform1f (varLoc, scl);
       break;
     // rotation
     case Qt::Key_Q :
@@ -83,6 +82,7 @@ void MyGLWidget::paintGL ()
 
   // funcion transformación
     modelTranslate();
+  
   // Activem l'Array a pintar 
   glBindVertexArray(VAO1);
  
