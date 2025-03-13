@@ -28,7 +28,7 @@ class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 
     virtual void keyPressEvent ( QKeyEvent * e );
 
-    void modelTranslate (); 
+    void modelTranslate (float changex, float changey);
 
   private:
     void creaBuffers ();

@@ -26,11 +26,11 @@ void MyGLWidget::initializeGL ()
   creaBuffers();
 }
 
-void MyGLWidget::modelTranslate () {
+void MyGLWidget::modelTranslate (float changex, float changey) {
   glm::mat4 TG (1.0); // Matriu de transformació, inicialment identitat
   TG = glm::rotate (TG, (float)glm::radians(direction), glm::vec3 (0.0, 0.0, -1.0));
-  TG = glm::translate (TG, glm::vec3 (movx, movy, 0.0));
-  TG = glm::scale (TG, glm::vec3 (sqrt(scl), 1.0/log(scl), 0));
+  TG = glm::translate (TG, glm::vec3 (movx + changex, movy + changey, 0.0));
+  TG = glm::scale (TG, glm::vec3 (scl, scl, 0));
 
   glUniformMatrix4fv (transLoc, 1, GL_FALSE, &TG[0][0]);
 }
@@ -81,12 +81,22 @@ void MyGLWidget::paintGL ()
   glClear (GL_COLOR_BUFFER_BIT);  // Esborrem el frame-buffer
 
   // funcion transformación
-    modelTranslate();
+  modelTranslate(0.4, -0.2);
   
   // Activem l'Array a pintar 
   glBindVertexArray(VAO1);
  
   // Pintem l'escena
+  glDrawArrays(GL_TRIANGLES, 0, 3);
+
+  modelTranslate(-0.4, -0.2);
+
+    // Pintem l'escena
+  glDrawArrays(GL_TRIANGLES, 0, 3);
+
+  modelTranslate(0.0, 0.6);
+
+    // Pintem l'escena
   glDrawArrays(GL_TRIANGLES, 0, 3);
   
   // Desactivem el VAO
