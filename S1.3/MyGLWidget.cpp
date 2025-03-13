@@ -26,10 +26,10 @@ void MyGLWidget::initializeGL ()
   creaBuffers();
 }
 
-void MyGLWidget::modelTranslate (float changex, float changey) {
+void MyGLWidget::modelTranslate (float changex, float changey, float direction) {
   glm::mat4 TG (1.0); // Matriu de transformació, inicialment identitat
-  TG = glm::rotate (TG, (float)glm::radians(direction), glm::vec3 (0.0, 0.0, -1.0));
   TG = glm::translate (TG, glm::vec3 (movx + changex, movy + changey, 0.0));
+  TG = glm::rotate (TG, (float)glm::radians(direction), glm::vec3 (0.0, 0.0, -1.0));
   TG = glm::scale (TG, glm::vec3 (scl, scl, 0));
 
   glUniformMatrix4fv (transLoc, 1, GL_FALSE, &TG[0][0]);
@@ -49,10 +49,16 @@ void MyGLWidget::keyPressEvent (QKeyEvent *e) {
       break;
     // rotation
     case Qt::Key_Q :
-      direction -= 2.0;
+      dir2 -= 2.0;
+      dir1 -= 2.0;
       break;
     case Qt::Key_E :
-      direction += 2.0;
+      dir2 += 2.0;
+      dir1 += 2.0;
+      break;
+    case Qt::Key_P :
+      dir2 -= 2.0;
+      dir1 += 2.0;
       break;
     // position
     case Qt::Key_Left :
@@ -81,7 +87,7 @@ void MyGLWidget::paintGL ()
   glClear (GL_COLOR_BUFFER_BIT);  // Esborrem el frame-buffer
 
   // funcion transformación
-  modelTranslate(0.4, -0.2);
+  modelTranslate(0.4, -0.2, dir1);
   
   // Activem l'Array a pintar 
   glBindVertexArray(VAO1);
@@ -89,15 +95,11 @@ void MyGLWidget::paintGL ()
   // Pintem l'escena
   glDrawArrays(GL_TRIANGLES, 0, 3);
 
-  modelTranslate(-0.4, -0.2);
+  modelTranslate(-0.4, -0.2, dir2);
 
     // Pintem l'escena
   glDrawArrays(GL_TRIANGLES, 0, 3);
 
-  modelTranslate(0.0, 0.6);
-
-    // Pintem l'escena
-  glDrawArrays(GL_TRIANGLES, 0, 3);
   
   // Desactivem el VAO
   glBindVertexArray(0);

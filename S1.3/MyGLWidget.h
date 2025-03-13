@@ -28,8 +28,7 @@ class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 
     virtual void keyPressEvent ( QKeyEvent * e );
 
-    void modelTranslate (float changex, float changey);
-
+void modelTranslate (float changex, float changey, float direction);
   private:
     void creaBuffers ();
     void carregaShaders ();
@@ -46,6 +45,7 @@ class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
     float scl = 1;
     GLuint VAO1;
     GLint ample, alt;
-    float direction = 0.45;
+    float dir1 = 0;
+    float dir2 = 0;
     float movx = 0, movy = 0;
 };
