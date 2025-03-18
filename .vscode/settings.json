@@ -1,6 +1,7 @@
 {
     "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
-        "*.frag": "cpp"
+        "*.frag": "cpp",
+        "qopenglfunctions_3_3_core": "cpp"
     }
 }

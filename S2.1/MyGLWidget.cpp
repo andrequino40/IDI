@@ -42,11 +42,39 @@ int MyGLWidget::printOglError(const char file[], int line, const char func[])
         printf("glError in file %s @ line %d: %s function: %s\n",
                              file, line, error, func);
         retCode = 1;
-    }
+    }   
     return retCode;
 }
 
+void MyGLWidget::creaBuffers(){
+    // lodea modelo
+    m.load("./Model/HomerProves.obj");
 
+    // crea vao
+    glGenVertexArrays(1, &VAO_HomerProves);
+    glBindVertexArray(VAO_HomerProves);
+
+    // crea vbos
+    GLuint VBO_Homer[2];
+
+    glGenBuffers(2, VBO_Homer);
+
+    // carga vbo vertices
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_Homer[0]);
+    glBufferData (GL_ARRAY_BUFFER, sizeof(GLfloat) * m.faces ().size () * 3 * 3, m.VBO_vertices(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(vertexLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(vertexLoc);
+
+    // carga vbo colores
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_Homer[1]);
+    glBufferData (GL_ARRAY_BUFFER, sizeof(GLfloat) * m.faces ().size () * 3 * 3, m.VBO_matdiff(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(colorLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(colorLoc);
+
+    glBindVertexArray (0);
+}
 void MyGLWidget::initializeGL()
 {
   // Cal inicialitzar l'ús de les funcions d'OpenGL

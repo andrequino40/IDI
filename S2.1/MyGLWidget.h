@@ -1,5 +1,6 @@
 // MyGLWidget.h
 #include "BL2GLWidget.h"
+#include "./Model/model.h"
 
 class MyGLWidget : public BL2GLWidget {
   Q_OBJECT
@@ -11,8 +12,12 @@ class MyGLWidget : public BL2GLWidget {
   protected:
   void carregaShaders();
   void initializeGL();
-  
+  void creaBuffers ();
+  void paintGL (): 
+
   GLuint projLoc, viewLoc;
+  Model m;
+  GLuint VAO_HomerProves;;
 
   private:
   void viewTransform ();

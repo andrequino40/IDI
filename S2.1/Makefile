@@ -624,6 +624,7 @@ moc_MyForm.cpp: MyForm.h \
 		ui_MyForm.h \
 		MyGLWidget.h \
 		BL2GLWidget.h \
+		Model/model.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
 	/usr/lib64/qt5/bin/moc $(DEFINES) --include /dades/angel.andres.quinones/repos/IDI/IDI/S2.1/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1 -I/usr/include/glm -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1/Model -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include MyForm.h -o moc_MyForm.cpp
@@ -635,6 +636,7 @@ moc_BL2GLWidget.cpp: BL2GLWidget.h \
 
 moc_MyGLWidget.cpp: MyGLWidget.h \
 		BL2GLWidget.h \
+		Model/model.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
 	/usr/lib64/qt5/bin/moc $(DEFINES) --include /dades/angel.andres.quinones/repos/IDI/IDI/S2.1/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1 -I/usr/include/glm -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1/Model -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include MyGLWidget.h -o moc_MyGLWidget.cpp
@@ -649,7 +651,8 @@ compiler_uic_clean:
 ui_MyForm.h: MyForm.ui \
 		/usr/lib64/qt5/bin/uic \
 		MyGLWidget.h \
-		BL2GLWidget.h
+		BL2GLWidget.h \
+		Model/model.h
 	/usr/lib64/qt5/bin/uic MyForm.ui -o ui_MyForm.h
 
 compiler_yacc_decl_make_all:
@@ -665,20 +668,23 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 main.o: main.cpp MyForm.h \
 		ui_MyForm.h \
 		MyGLWidget.h \
-		BL2GLWidget.h
+		BL2GLWidget.h \
+		Model/model.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 MyForm.o: MyForm.cpp MyForm.h \
 		ui_MyForm.h \
 		MyGLWidget.h \
-		BL2GLWidget.h
+		BL2GLWidget.h \
+		Model/model.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MyForm.o MyForm.cpp
 
 BL2GLWidget.o: BL2GLWidget.cpp BL2GLWidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BL2GLWidget.o BL2GLWidget.cpp
 
 MyGLWidget.o: MyGLWidget.cpp MyGLWidget.h \
-		BL2GLWidget.h
+		BL2GLWidget.h \
+		Model/model.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MyGLWidget.o MyGLWidget.cpp
 
 model.o: Model/model.cpp Model/model.h
