@@ -52,17 +52,26 @@ void MyGLWidget::initializeGL()
   // Cal inicialitzar l'ús de les funcions d'OpenGL
   BL2GLWidget::initializeGL();
   MyGLWidget::projectTransform();
+  MyGLWidget::viewTransform();
 }
 
 void MyGLWidget::carregaShaders() { // declarem-lo també en MyGLWidget.h
     BL2GLWidget::carregaShaders(); // cridem primer al mètode de BL2GLWidget
     projLoc = glGetUniformLocation (program->programId(), "proj");
+    viewLoc = glGetUniformLocation (program->programId(), "view");
 }
 
 void MyGLWidget::projectTransform () {
 // glm::perspective (FOV en radians, ra window, znear, zfar)
     glm::mat4 Proj = glm::perspective (float(M_PI)/2.0f, 1.0f, 0.4f, 3.0f);
     glUniformMatrix4fv (projLoc, 1, GL_FALSE, &Proj[0][0]);
+}
+
+void MyGLWidget::viewTransform () {
+// glm::lookAt (OBS, VRP, UP)
+    glm::mat4 View = glm::lookAt (glm::vec3(0,0,1),
+    glm::vec3(0,0,0), glm::vec3(0,1,0));
+    glUniformMatrix4fv (viewLoc, 1, GL_FALSE, &View[0][0]);
 }
 
 MyGLWidget::~MyGLWidget() {
