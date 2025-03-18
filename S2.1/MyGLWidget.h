@@ -10,7 +10,10 @@ class MyGLWidget : public BL2GLWidget {
 
   protected:
   void carregaShaders();
-    GLuint projLoc;
+  void initializeGL();
+  GLuint projLoc;
+
   private:
-    int printOglError(const char file[], int line, const char func[]);
+  void projectTransform ();
+  int printOglError(const char file[], int line, const char func[]);
 };
