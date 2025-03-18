@@ -13,7 +13,9 @@ class MyGLWidget : public BL2GLWidget {
   void carregaShaders();
   void initializeGL();
   void creaBuffers ();
-  void paintGL (): 
+  void paintGL ();
+  void modelTransform () ;
+
 
   GLuint projLoc, viewLoc;
   Model m;

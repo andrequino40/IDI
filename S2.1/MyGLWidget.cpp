@@ -46,6 +46,36 @@ int MyGLWidget::printOglError(const char file[], int line, const char func[])
     return retCode;
 }
 
+void MyGLWidget::modelTransform () 
+{
+  // Matriu de transformació de model
+  glm::mat4 transform (1.0f);
+  transform = glm::scale(transform, glm::vec3(escala));
+  glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transform[0][0]);
+}
+
+void MyGLWidget::paintGL () 
+{
+// En cas de voler canviar els paràmetres del viewport, descomenteu la crida següent i
+// useu els paràmetres que considereu (els que hi ha són els de per defecte)
+//  glViewport (0, 0, ample, alt);
+  
+  // Esborrem el frame-buffer
+  glClear (GL_COLOR_BUFFER_BIT);
+
+  // Carreguem la transformació de model
+  modelTransform ();
+
+  // Activem el VAO per a pintar la caseta 
+  glBindVertexArray (VAO_HomerProves);
+
+  // pintem
+    glDrawArrays (GL_TRIANGLES, 0, m.faces ().size () * 3);
+
+  glBindVertexArray (0);
+}
+
+
 void MyGLWidget::creaBuffers(){
     // lodea modelo
     m.load("./Model/HomerProves.obj");
