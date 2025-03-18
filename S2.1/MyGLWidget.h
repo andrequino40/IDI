@@ -8,6 +8,9 @@ class MyGLWidget : public BL2GLWidget {
     MyGLWidget(QWidget *parent=0) : BL2GLWidget(parent) {}
     ~MyGLWidget();
 
+  protected:
+  void carregaShaders();
+    GLuint projLoc;
   private:
     int printOglError(const char file[], int line, const char func[]);
 };

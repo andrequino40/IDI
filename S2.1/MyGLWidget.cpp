@@ -46,6 +46,11 @@ int MyGLWidget::printOglError(const char file[], int line, const char func[])
     return retCode;
 }
 
+void MyGLWidget::carregaShaders() { // declarem-lo també en MyGLWidget.h
+    BL2GLWidget::carregaShaders(); // cridem primer al mètode de BL2GLWidget
+    projLoc = glGetUniformLocation (program->programId(), "proj");
+}
+
 MyGLWidget::~MyGLWidget() {
 }
 
