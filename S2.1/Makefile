@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I/usr/include/glm -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I/usr/include/glm -IModel -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -55,13 +55,15 @@ OBJECTS_DIR   = ./
 SOURCES       = main.cpp \
 		MyForm.cpp \
 		BL2GLWidget.cpp \
-		MyGLWidget.cpp moc_MyForm.cpp \
+		MyGLWidget.cpp \
+		Model/model.cpp moc_MyForm.cpp \
 		moc_BL2GLWidget.cpp \
 		moc_MyGLWidget.cpp
 OBJECTS       = main.o \
 		MyForm.o \
 		BL2GLWidget.o \
 		MyGLWidget.o \
+		model.o \
 		moc_MyForm.o \
 		moc_BL2GLWidget.o \
 		moc_MyGLWidget.o
@@ -205,6 +207,7 @@ DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib64/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib64/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib64/qt5/mkspecs/features/default_pre.prf \
@@ -229,7 +232,8 @@ DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		MyGLWidget.h main.cpp \
 		MyForm.cpp \
 		BL2GLWidget.cpp \
-		MyGLWidget.cpp
+		MyGLWidget.cpp \
+		Model/model.cpp
 QMAKE_TARGET  = Bloc2_Exemple
 DESTDIR       = 
 TARGET        = Bloc2_Exemple
@@ -381,6 +385,7 @@ Makefile: Bloc2_Exemple.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf /usr/lib
 		/usr/lib64/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib64/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib64/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib64/qt5/mkspecs/features/default_pre.prf \
@@ -542,6 +547,7 @@ Makefile: Bloc2_Exemple.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf /usr/lib
 /usr/lib64/qt5/mkspecs/features/qt_config.prf:
 /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib64/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib64/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib64/qt5/mkspecs/features/toolchain.prf:
 /usr/lib64/qt5/mkspecs/features/default_pre.prf:
@@ -578,7 +584,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents MyForm.h BL2GLWidget.h MyGLWidget.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp MyForm.cpp BL2GLWidget.cpp MyGLWidget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp MyForm.cpp BL2GLWidget.cpp MyGLWidget.cpp Model/model.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents MyForm.ui $(DISTDIR)/
 
 
@@ -616,20 +622,22 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_MyForm.cpp moc_BL2GLWidget.cpp moc_MyGLWidget.cpp
 moc_MyForm.cpp: MyForm.h \
 		ui_MyForm.h \
+		MyGLWidget.h \
+		BL2GLWidget.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /dades/angel.andres.quinones/repos/IDI/IDI/S2.1/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1 -I/usr/include/glm -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include MyForm.h -o moc_MyForm.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /dades/angel.andres.quinones/repos/IDI/IDI/S2.1/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1 -I/usr/include/glm -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1/Model -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include MyForm.h -o moc_MyForm.cpp
 
 moc_BL2GLWidget.cpp: BL2GLWidget.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /dades/angel.andres.quinones/repos/IDI/IDI/S2.1/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1 -I/usr/include/glm -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include BL2GLWidget.h -o moc_BL2GLWidget.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /dades/angel.andres.quinones/repos/IDI/IDI/S2.1/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1 -I/usr/include/glm -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1/Model -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include BL2GLWidget.h -o moc_BL2GLWidget.cpp
 
 moc_MyGLWidget.cpp: MyGLWidget.h \
 		BL2GLWidget.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /dades/angel.andres.quinones/repos/IDI/IDI/S2.1/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1 -I/usr/include/glm -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include MyGLWidget.h -o moc_MyGLWidget.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /dades/angel.andres.quinones/repos/IDI/IDI/S2.1/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1 -I/usr/include/glm -I/dades/angel.andres.quinones/repos/IDI/IDI/S2.1/Model -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include MyGLWidget.h -o moc_MyGLWidget.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -655,11 +663,15 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 ####### Compile
 
 main.o: main.cpp MyForm.h \
-		ui_MyForm.h
+		ui_MyForm.h \
+		MyGLWidget.h \
+		BL2GLWidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 MyForm.o: MyForm.cpp MyForm.h \
-		ui_MyForm.h
+		ui_MyForm.h \
+		MyGLWidget.h \
+		BL2GLWidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MyForm.o MyForm.cpp
 
 BL2GLWidget.o: BL2GLWidget.cpp BL2GLWidget.h
@@ -668,6 +680,9 @@ BL2GLWidget.o: BL2GLWidget.cpp BL2GLWidget.h
 MyGLWidget.o: MyGLWidget.cpp MyGLWidget.h \
 		BL2GLWidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MyGLWidget.o MyGLWidget.cpp
+
+model.o: Model/model.cpp Model/model.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o model.o Model/model.cpp
 
 moc_MyForm.o: moc_MyForm.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MyForm.o moc_MyForm.cpp
