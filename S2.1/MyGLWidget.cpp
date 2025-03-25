@@ -73,6 +73,10 @@ void MyGLWidget::paintGL ()
   // pintem
     glDrawArrays (GL_TRIANGLES, 0, m.faces ().size () * 3);
 
+    glBindVertexArray(VAO_Suelo);
+
+    glDrawArrays(GL_TRIANGLES, 0, vertices_Suelo);
+
   glBindVertexArray (0);
 }
 
@@ -106,10 +110,59 @@ void MyGLWidget::creaBuffers(){
 
     glBindVertexArray (0);
 }
+
+void MyGLWidget::creaBuffersSuelo() {
+    glm::vec3 Vertices[vertices_Suelo];  // Tres vèrtexs amb X, Y i Z
+    int i = 0;
+// lado frente izquierda
+  Vertices[i++] = glm::vec3(-1.0, -1.0, -1.0);
+  Vertices[i++] = glm::vec3(-1.0, -1.0, 1.0);
+  Vertices[i++] = glm::vec3(1.0, -1.0, 1.0);
+  // lade fondo derecha
+  Vertices[i++] = glm::vec3(-1.0, -1.0, -1.0);
+  Vertices[i++] = glm::vec3(1.0, -1.0, -1.0);
+  Vertices[i++] = glm::vec3(1.0, -1.0, 1.0);
+  
+  // Creació del Vertex Array Object (VAO) que usarem per pintar
+  glGenVertexArrays(1, &VAO_Suelo);
+  glBindVertexArray(VAO_Suelo);
+
+  // Creació del buffer amb les dades dels vèrtexs
+  GLuint VBO1;
+  glGenBuffers(1, &VBO1);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
+  // Activem l'atribut que farem servir per vèrtex (només el 0 en aquest cas)	
+  glVertexAttribPointer(vertexLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
+  glEnableVertexAttribArray(vertexLoc);
+
+  //VBO2 
+  glm::vec3 Colors[vertices_Suelo];
+  i = 0;
+  Colors[i++] = glm::vec3(0.67, 0.85, 0.9);   // LBlue
+  Colors[i++] = glm::vec3(1.0, 0.75, 0.8);  // Pink
+Colors[i++] = glm::vec3(0.67, 0.85, 0.9);   // LBlue 
+  Colors[i++] = glm::vec3(0.67, 0.85, 0.9);   // LBlue
+  Colors[i++] = glm::vec3(1.0, 0.75, 0.8);  // Pink
+  Colors[i++] = glm::vec3(0.67, 0.85, 0.9);   // LBlue
+ 
+   // Creació del buffer amb les dades dels vèrtexs
+  GLuint VBO2;
+  glGenBuffers(1  , &VBO2);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(Colors), Colors, GL_STATIC_DRAW);
+  // Activem l'atribut que farem servir per vèrtex (només el 0 en aquest cas)	
+  glVertexAttribPointer(colorLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
+  glEnableVertexAttribArray(colorLoc);
+
+  // Desactivem el VAO
+  glBindVertexArray(0);
+}
 void MyGLWidget::initializeGL()
 {
   // Cal inicialitzar l'ús de les funcions d'OpenGL
   BL2GLWidget::initializeGL();
+  creaBuffersSuelo();
   MyGLWidget::projectTransform();
   MyGLWidget::viewTransform();
   glEnable (GL_DEPTH_TEST);
@@ -129,7 +182,7 @@ void MyGLWidget::projectTransform () {
 
 void MyGLWidget::viewTransform () {
 // glm::lookAt (OBS, VRP, UP)
-    glm::mat4 View = glm::lookAt (glm::vec3(0,0,1),
+    glm::mat4 View = glm::lookAt (glm::vec3(0,0,2),
     glm::vec3(0,0,0), glm::vec3(0,1,0));
     glUniformMatrix4fv (viewLoc, 1, GL_FALSE, &View[0][0]);
 }

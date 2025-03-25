@@ -19,9 +19,11 @@ class MyGLWidget : public BL2GLWidget {
 
   GLuint projLoc, viewLoc;
   Model m;
-  GLuint VAO_HomerProves;;
+  GLuint VAO_HomerProves, VAO_Suelo;
 
   private:
+  int vertices_Suelo = 6;
+  void creaBuffersSuelo();
   void viewTransform ();
   void projectTransform ();
   int printOglError(const char file[], int line, const char func[]);
