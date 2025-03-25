@@ -15,6 +15,7 @@ class MyGLWidget : public BL2GLWidget {
   void creaBuffers ();
   void paintGL ();
   void modelTransform () ;
+  void keyPressEvent(QKeyEvent* event);
 
 
   GLuint projLoc, viewLoc;

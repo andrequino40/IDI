@@ -63,6 +63,32 @@ void MyGLWidget::modelTransformHomer ()
   glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transform[0][0]);
 }
 
+void MyGLWidget::keyPressEvent(QKeyEvent* event) 
+{
+  makeCurrent();
+  switch (event->key()) {
+    case Qt::Key_S: { // escalar a més gran
+      escala += 0.05;
+      break;
+    }
+    case Qt::Key_D: { // escalar a més petit
+      escala -= 0.05;
+      break;
+    }
+    case Qt::Key_Q: {
+      rota_Homer += 45.0;
+      break;
+    }
+    case Qt::Key_E: {
+      rota_Homer -= 45.0;
+      break;
+    }
+    default: event->ignore(); break;
+  }
+  update();
+}
+
+
 void MyGLWidget::paintGL () 
 {
 // En cas de voler canviar els paràmetres del viewport, descomenteu la crida següent i
