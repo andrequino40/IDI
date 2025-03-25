@@ -54,6 +54,15 @@ void MyGLWidget::modelTransform ()
   glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transform[0][0]);
 }
 
+void MyGLWidget::modelTransformHomer () 
+{
+  // Matriu de transformació de model
+  glm::mat4 transform (1.0f);
+  transform = glm::rotate (transform, (float)glm::radians(rota_Homer), glm::vec3 (0.0, 1.0, 0.0));
+  transform = glm::scale(transform, glm::vec3(escala));
+  glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transform[0][0]);
+}
+
 void MyGLWidget::paintGL () 
 {
 // En cas de voler canviar els paràmetres del viewport, descomenteu la crida següent i
@@ -65,13 +74,15 @@ void MyGLWidget::paintGL ()
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Carreguem la transformació de model
-  modelTransform ();
+  modelTransformHomer();
 
   // Activem el VAO per a pintar la caseta 
   glBindVertexArray (VAO_HomerProves);
 
   // pintem
     glDrawArrays (GL_TRIANGLES, 0, m.faces ().size () * 3);
+
+    modelTransform();
 
     glBindVertexArray(VAO_Suelo);
 

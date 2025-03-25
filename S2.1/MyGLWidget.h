@@ -22,7 +22,9 @@ class MyGLWidget : public BL2GLWidget {
   GLuint VAO_HomerProves, VAO_Suelo;
 
   private:
+  float rota_Homer = 45.0;
   int vertices_Suelo = 6;
+  void modelTransformHomer() ;
   void creaBuffersSuelo();
   void viewTransform ();
   void projectTransform ();
