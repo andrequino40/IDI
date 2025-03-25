@@ -62,6 +62,7 @@ void MyGLWidget::paintGL ()
   
   // Esborrem el frame-buffer
   glClear (GL_COLOR_BUFFER_BIT);
+  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Carreguem la transformació de model
   modelTransform ();
@@ -111,6 +112,7 @@ void MyGLWidget::initializeGL()
   BL2GLWidget::initializeGL();
   MyGLWidget::projectTransform();
   MyGLWidget::viewTransform();
+  glEnable (GL_DEPTH_TEST);
 }
 
 void MyGLWidget::carregaShaders() { // declarem-lo també en MyGLWidget.h
