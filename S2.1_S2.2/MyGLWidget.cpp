@@ -156,9 +156,9 @@ void MyGLWidget::creaBuffersSuelo() {
   Vertices[i++] = glm::vec3(-1.0, -1.0, 1.0);
   Vertices[i++] = glm::vec3(1.0, -1.0, 1.0);
   // lade fondo derecha
-  Vertices[i++] = glm::vec3(-1.0, -1.0, -1.0);
-  Vertices[i++] = glm::vec3(1.0, -1.0, -1.0);
   Vertices[i++] = glm::vec3(1.0, -1.0, 1.0);
+  Vertices[i++] = glm::vec3(1.0, -1.0, -1.0);
+  Vertices[i++] = glm::vec3(-1.0, -1.0, -1.0);
   
   // Creació del Vertex Array Object (VAO) que usarem per pintar
   glGenVertexArrays(1, &VAO_Suelo);
