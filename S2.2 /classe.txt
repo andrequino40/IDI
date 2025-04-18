@@ -1,0 +1,4 @@
+private no se toca, pbulic y protected si
+project transform se llama en el initialize
+
+glEnable gl depth test, una vez en initialize
