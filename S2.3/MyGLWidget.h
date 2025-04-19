@@ -32,6 +32,11 @@ class MyGLWidget : public BL2GLWidget {
   int vertices_Suelo = 6;
   glm::vec3 centre_escena;
   float radi_escena;
+  float theta = 0;
+  float psi = 0;
+  float xmouse = 0;
+  float ymouse = 0;
+  void mouseMoveEvent (QMouseEvent *event);
   void calculaCapsaModel (Model &p, float &escala, float alcadaDesitjada, glm::vec3 &CentreBase);
   void updateCamera();
   void calcAtributsEscena(glm::vec3 punt_min, glm::vec3 punt_max);

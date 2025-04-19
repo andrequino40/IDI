@@ -64,6 +64,31 @@ void MyGLWidget::modelTransformModel ()
   glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transform[0][0]);
 }
 
+void MyGLWidget::mouseMoveEvent (QMouseEvent *e){
+  makeCurrent();
+  int xnew = e->x();
+  int ynew = e->y();
+  if ( e->buttons() == Qt::LeftButton && ! ( e->modifiers() &
+  ( Qt::ShiftModifier | Qt::AltModifier | Qt::ControlModifier ) ) )
+  // controla que s’ha premut botó esquerre i cap modificador
+  {
+    int xdelta = xnew - xmouse;
+    int ydelta = ynew - ymouse;
+    xmouse = xnew;
+    ymouse = ynew;
+    theta += float(ydelta);
+    psi -= float(xdelta);
+    updateCamera();
+    update();
+    // std::cerr << "----------------" << std::endl;
+    // std::cerr << "xdelta: " << xdelta << std::endl;
+    // std::cerr << "ydelta: " << ydelta << std::endl;
+    // std::cerr << "theta: " << theta << std::endl;
+    // std::cerr << "psi: " << psi << std::endl;
+  }
+}
+
+
 void MyGLWidget::keyPressEvent(QKeyEvent* event) 
 {
   makeCurrent();
@@ -274,10 +299,11 @@ void MyGLWidget::viewTransformEuler(glm::vec3 VRP, float d, float alçada) {
   // glm::mat4 View = glm::lookAt(OBS, VRP, UP);
   glm::mat4 View(1.0f);
   View = glm::translate(View, glm::vec3(0.0f, 0.0f, -d));
-  float theta = tan(alçada/d);
-  View = glm::rotate(View, theta, glm::vec3(1.0f, 0.0f, 0.0f));
+  View = glm::rotate(View, (float)glm::radians(-theta), glm::vec3(1.0f, 0.0f, 0.0f));
+  View = glm::rotate(View, (float)glm::radians(psi), glm::vec3(0.0f, 1.0f, 0.0f));
   View = glm::translate(View, -VRP);
   glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &View[0][0]);
+  // std::cerr << "euler" << std::endl;
 }
 
 void MyGLWidget:: calcAtributsEscena(glm::vec3 min, glm::vec3 max) {
