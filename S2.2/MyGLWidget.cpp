@@ -46,7 +46,7 @@ int MyGLWidget::printOglError(const char file[], int line, const char func[])
     return retCode;
 }
 
-void MyGLWidget::modelTransform () 
+void MyGLWidget::modelTransformSuelo() 
 {
   // Matriu de transformació de model
   glm::mat4 transform (1.0f);
@@ -113,19 +113,25 @@ void MyGLWidget::paintGL ()
   glBindVertexArray (VAO_HomerProves);
 
   // pintem
-    glDrawArrays (GL_TRIANGLES, 0, m.faces ().size () * 3);
+  glDrawArrays (GL_TRIANGLES, 0, m.faces ().size () * 3);
 
-    modelTransform();
+  // repeat
+  modelTransformSuelo();
 
-    glBindVertexArray(VAO_Suelo);
+  glBindVertexArray(VAO_Suelo);
 
-    glDrawArrays(GL_TRIANGLES, 0, vertices_Suelo);
+  glDrawArrays(GL_TRIANGLES, 0, vertices_Suelo);
 
   glBindVertexArray (0);
 }
 
 
 void MyGLWidget::creaBuffers(){
+   creaBuffersHomer();
+   creaBuffersSuelo();
+}
+
+void MyGLWidget::creaBuffersHomer(){
     // lodea modelo
     m.load("./Model/HomerProves.obj");
 
@@ -154,6 +160,8 @@ void MyGLWidget::creaBuffers(){
 
     glBindVertexArray (0);
 }
+
+
 
 void MyGLWidget::creaBuffersSuelo() {
     glm::vec3 Vertices[vertices_Suelo];  // Tres vèrtexs amb X, Y i Z
@@ -206,7 +214,6 @@ void MyGLWidget::initializeGL()
 {
   // Cal inicialitzar l'ús de les funcions d'OpenGL
   BL2GLWidget::initializeGL();
-  creaBuffersSuelo();
   updateCamera();
   // MyGLWidget::projectTransform();
   // MyGLWidget::viewTransform();
