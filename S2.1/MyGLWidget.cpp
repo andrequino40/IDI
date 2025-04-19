@@ -54,11 +54,11 @@ void MyGLWidget::modelTransform ()
   glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transform[0][0]);
 }
 
-void MyGLWidget::modelTransformHomer () 
+void MyGLWidget::modelTransformModel () 
 {
   // Matriu de transformació de model
   glm::mat4 transform (1.0f);
-  transform = glm::rotate (transform, (float)glm::radians(rota_Homer), glm::vec3 (0.0, 1.0, 0.0));
+  transform = glm::rotate (transform, (float)glm::radians(rota_model), glm::vec3 (0.0, 1.0, 0.0));
   transform = glm::scale(transform, glm::vec3(escala));
   glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transform[0][0]);
 }
@@ -76,11 +76,11 @@ void MyGLWidget::keyPressEvent(QKeyEvent* event)
       break;
     }
     case Qt::Key_Q: {
-      rota_Homer += 45.0;
+      rota_model += 45.0;
       break;
     }
     case Qt::Key_E: {
-      rota_Homer -= 45.0;
+      rota_model -= 45.0;
       break;
     }
     default: event->ignore(); break;
@@ -100,7 +100,7 @@ void MyGLWidget::paintGL ()
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Carreguem la transformació de model
-  modelTransformHomer();
+  modelTransformModel();
 
   // Activem el VAO per a pintar la caseta 
   glBindVertexArray (VAO_HomerProves);

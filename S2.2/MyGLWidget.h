@@ -25,16 +25,17 @@ class MyGLWidget : public BL2GLWidget {
   
   private:
   float rav = 1;
-  float rota_Homer = 45.0;
+  float rota_model = 45.0;
+  float escala_model = 4.0f;
   int vertices_Suelo = 6;
   glm::vec3 centre_escena;
   float radi_escena;
   void updateCamera();
   void calcAtributsEscena(glm::vec3 punt_min, glm::vec3 punt_max);
   void modelTransformSuelo() ;
-  void modelTransformHomer() ;
+  void modelTransformModel() ;
   void creaBuffersSuelo();
-  void creaBuffersHomer();
+  void creaBuffersModel();
   void viewTransform (glm::vec3 OBS, glm::vec3 VRP, glm::vec3 UP);
   void projectTransform (float fov, float ra, float z_near, float z_far);
   int printOglError(const char file[], int line, const char func[]);
