@@ -200,8 +200,9 @@ void MyGLWidget::initializeGL()
   // Cal inicialitzar l'ús de les funcions d'OpenGL
   BL2GLWidget::initializeGL();
   creaBuffersSuelo();
-  MyGLWidget::projectTransform();
-  MyGLWidget::viewTransform();
+  updateCamera();
+  // MyGLWidget::projectTransform();
+  // MyGLWidget::viewTransform();
   glEnable (GL_DEPTH_TEST);
 }
 
@@ -211,18 +212,43 @@ void MyGLWidget::carregaShaders() { // declarem-lo també en MyGLWidget.h
     viewLoc = glGetUniformLocation (program->programId(), "view");
 }
 
-void MyGLWidget::projectTransform () {
+void MyGLWidget::projectTransform (float fov, float ra, float z_near, float z_far) {
 // glm::perspective (FOV en radians, ra window, znear, zfar)
-    glm::mat4 Proj = glm::perspective (float(M_PI)/2.0f, 1.0f, 0.4f, 3.0f);
+// float)glm::radians()
+    glm::mat4 Proj = glm::perspective ((float)glm::radians(fov), ra, z_near, z_far);
     glUniformMatrix4fv (projLoc, 1, GL_FALSE, &Proj[0][0]);
 }
 
-void MyGLWidget::viewTransform () {
-// glm::lookAt (OBS, VRP, UP)
-    glm::mat4 View = glm::lookAt (glm::vec3(0,0,2),
-    glm::vec3(0,0,0), glm::vec3(0,1,0));
-    glUniformMatrix4fv (viewLoc, 1, GL_FALSE, &View[0][0]);
+void MyGLWidget::viewTransform(glm::vec3 OBS, glm::vec3 VRP, glm::vec3 UP) {
+  glm::mat4 View = glm::lookAt(OBS, VRP, UP);
+  glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &View[0][0]);
 }
+
+void MyGLWidget:: calcAtributsEscena(glm::vec3 min, glm::vec3 max) {
+  centre_escena = (min+max)/2.0f;
+  radi_escena = glm::distance(centre_escena, max);
+}
+
+void MyGLWidget::updateCamera() {
+   calcAtributsEscena(glm::vec3(-2.0f, -1.0f, -2.0f), glm::vec3(2.0f, 1.0f, 2.0f));
+
+  float d = radi_escena * 2;
+
+  glm::vec3 VRP = centre_escena;
+  glm::vec3 OBS = VRP + glm::vec3(0,0,d);
+  glm::vec3 UP = glm::vec3(0,1,0);
+
+  viewTransform(OBS, VRP, UP);
+
+  float z_near = d - radi_escena;
+  float z_far = d + radi_escena;
+  float ra = 1;
+  float fov = 2*glm::asin(radi_escena/d);
+
+  projectTransform(fov, ra, z_near, z_far);
+}
+
+
 
 MyGLWidget::~MyGLWidget() {
 }
