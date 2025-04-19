@@ -25,8 +25,10 @@ class MyGLWidget : public BL2GLWidget {
   
   private:
   float rav = 1;
+  glm::vec3 centre_base;
+  float factor_escala_model;
   float rota_model = 45.0;
-  float escala_model = 4.0f;
+  float escala_desitjada_model = 4.0f;
   int vertices_Suelo = 6;
   glm::vec3 centre_escena;
   float radi_escena;

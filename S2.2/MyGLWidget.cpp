@@ -59,7 +59,8 @@ void MyGLWidget::modelTransformModel ()
   // Matriu de transformació de model
   glm::mat4 transform (1.0f);
   transform = glm::rotate (transform, (float)glm::radians(rota_model), glm::vec3 (0.0, 1.0, 0.0));
-  transform = glm::scale(transform, glm::vec3(escala));
+  transform = glm::scale(transform, glm::vec3(factor_escala_model));
+  transform = glm::translate(transform, -centre_base);
   glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transform[0][0]);
 }
 
@@ -68,11 +69,13 @@ void MyGLWidget::keyPressEvent(QKeyEvent* event)
   makeCurrent();
   switch (event->key()) {
     case Qt::Key_S: { // escalar a més gran
-      escala += 0.05;
+      escala_desitjada_model+= 0.05;
+      calculaCapsaModel(m, factor_escala_model, escala_desitjada_model, centre_base);
       break;
     }
     case Qt::Key_D: { // escalar a més petit
-      escala -= 0.05;
+      escala_desitjada_model-= 0.05;
+      calculaCapsaModel(m, factor_escala_model, escala_desitjada_model, centre_base);
       break;
     }
     case Qt::Key_Q: {
@@ -110,7 +113,7 @@ void MyGLWidget::paintGL ()
   modelTransformModel();
 
   // Activem el VAO per a pintar la caseta 
-  glBindVertexArray (VAO_HomerProves);
+  glBindVertexArray(VAO_HomerProves);
 
   // pintem
   glDrawArrays (GL_TRIANGLES, 0, m.faces ().size () * 3);
@@ -134,6 +137,8 @@ void MyGLWidget::creaBuffers(){
 void MyGLWidget::creaBuffersModel(){
     // lodea modelo
     m.load("./Model/Patricio.obj");
+
+    calculaCapsaModel(m, factor_escala_model, escala_desitjada_model, centre_base);
 
     // crea vao
     glGenVertexArrays(1, &VAO_HomerProves);
@@ -167,13 +172,13 @@ void MyGLWidget::creaBuffersSuelo() {
     glm::vec3 Vertices[vertices_Suelo];  // Tres vèrtexs amb X, Y i Z
     int i = 0;
 // lado frente izquierda
-  Vertices[i++] = glm::vec3(-2.0, -1.0, -2.0);
-  Vertices[i++] = glm::vec3(-2.0, -1.0, 2.0);
-  Vertices[i++] = glm::vec3(2.0, -1.0, 2.0);
+  Vertices[i++] = glm::vec3(-2.5, 0.0, -2.5);
+  Vertices[i++] = glm::vec3(-2.5, 0.0, 2.5);
+  Vertices[i++] = glm::vec3(2.5, 0.0, 2.5);
   // lade fondo derecha
-  Vertices[i++] = glm::vec3(2.0, -1.0, 2.0);
-  Vertices[i++] = glm::vec3(2.0, -1.0, -2.0);
-  Vertices[i++] = glm::vec3(-2.0, -1.0, -2.0);
+  Vertices[i++] = glm::vec3(2.5, 0.0, 2.5);
+  Vertices[i++] = glm::vec3(2.5, 0.0, -2.5);
+  Vertices[i++] = glm::vec3(-2.5, 0.0, -2.5);
   
   // Creació del Vertex Array Object (VAO) que usarem per pintar
   glGenVertexArrays(1, &VAO_Suelo);
@@ -272,12 +277,12 @@ void MyGLWidget:: calcAtributsEscena(glm::vec3 min, glm::vec3 max) {
 
 void MyGLWidget::updateCamera() {
   // valores por defecto de la escena de homer y el suelo
-   calcAtributsEscena(glm::vec3(-2.0f, -1.0f, -2.0f), glm::vec3(2.0f, 1.0f, 2.0f));
+   calcAtributsEscena(glm::vec3(-2.5f, 0.0f, -2.5f), glm::vec3(2.5f, 4.0f, 2.5f));
 
   float d = radi_escena * 2;
 
   glm::vec3 VRP = centre_escena;
-  glm::vec3 OBS = VRP + glm::vec3(0,0,d);
+  glm::vec3 OBS = VRP + glm::vec3(0,1,d);
   glm::vec3 UP = glm::vec3(0,1,0);
 
   viewTransform(OBS, VRP, UP);
