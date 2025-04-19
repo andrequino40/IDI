@@ -252,11 +252,20 @@ Colors[i++] = glm::vec3(0.67, 0.85, 0.9);   // LBlue
   // Desactivem el VAO
   glBindVertexArray(0);
 }
+
+void MyGLWidget::animar () {
+  makeCurrent ();
+  rota_model += 1.0; // exemple del que es vol animar
+  update ();
+}
+
 void MyGLWidget::initializeGL()
 {
   // Cal inicialitzar l'ús de les funcions d'OpenGL
   BL2GLWidget::initializeGL();
   updateCamera();
+  connect (&timer, SIGNAL (timeout()), this, SLOT (animar ()));
+  timer.start (16);
   // MyGLWidget::projectTransform();
   // MyGLWidget::viewTransform();
   glEnable (GL_DEPTH_TEST);

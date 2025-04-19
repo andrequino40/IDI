@@ -1,10 +1,13 @@
 // MyGLWidget.h
 #include "BL2GLWidget.h"
 #include "./Model/model.h"
+#include <QTimer>
 
 class MyGLWidget : public BL2GLWidget {
   Q_OBJECT
-
+  
+  public slots:
+    void animar ();
   public:
     MyGLWidget(QWidget *parent=0) : BL2GLWidget(parent) {}
     ~MyGLWidget();
@@ -24,6 +27,7 @@ class MyGLWidget : public BL2GLWidget {
   GLuint VAO_HomerProves, VAO_Suelo;
   
   private:
+  QTimer timer;
   float rav = 1;
   glm::vec3 centre_base;
   float factor_escala_model;
