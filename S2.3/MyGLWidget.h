@@ -40,6 +40,7 @@ class MyGLWidget : public BL2GLWidget {
   void creaBuffersSuelo();
   void creaBuffersModel();
   void viewTransform (glm::vec3 OBS, glm::vec3 VRP, glm::vec3 UP);
+  void viewTransformEuler (glm::vec3 VRP, float d, float alçada);
   void projectTransform (float fov, float ra, float z_near, float z_far);
   int printOglError(const char file[], int line, const char func[]);
 };

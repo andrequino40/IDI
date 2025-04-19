@@ -270,6 +270,16 @@ void MyGLWidget::viewTransform(glm::vec3 OBS, glm::vec3 VRP, glm::vec3 UP) {
   glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &View[0][0]);
 }
 
+void MyGLWidget::viewTransformEuler(glm::vec3 VRP, float d, float alçada) {
+  // glm::mat4 View = glm::lookAt(OBS, VRP, UP);
+  glm::mat4 View(1.0f);
+  View = glm::translate(View, glm::vec3(0.0f, 0.0f, -d));
+  float theta = tan(alçada/d);
+  View = glm::rotate(View, theta, glm::vec3(1.0f, 0.0f, 0.0f));
+  View = glm::translate(View, -VRP);
+  glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &View[0][0]);
+}
+
 void MyGLWidget:: calcAtributsEscena(glm::vec3 min, glm::vec3 max) {
   centre_escena = (min+max)/2.0f;
   radi_escena = glm::distance(centre_escena, max);
@@ -280,12 +290,13 @@ void MyGLWidget::updateCamera() {
    calcAtributsEscena(glm::vec3(-2.5f, 0.0f, -2.5f), glm::vec3(2.5f, 4.0f, 2.5f));
 
   float d = radi_escena * 2;
-
+  float alçada = 1;
   glm::vec3 VRP = centre_escena;
-  glm::vec3 OBS = VRP + glm::vec3(0,1,d);
+  glm::vec3 OBS = VRP + glm::vec3(0,alçada,d);
   glm::vec3 UP = glm::vec3(0,1,0);
 
-  viewTransform(OBS, VRP, UP);
+  // viewTransform(OBS, VRP, UP);
+  viewTransformEuler(VRP, d, alçada);
 
   float z_near = d - radi_escena;
   float z_far = d + radi_escena;
