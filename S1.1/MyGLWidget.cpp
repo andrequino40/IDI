@@ -156,7 +156,7 @@ void MyGLWidget::carregaShaders()
   program->link();
   // Indiquem que aquest és el program que volem usar
   program->bind();
-
+  
   // Obtenim identificador per a l'atribut “vertex” del vertex shader
   vertexLoc = glGetAttribLocation (program->programId(), "vertex");
 }

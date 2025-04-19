@@ -16,6 +16,8 @@ class MyGLWidget : public BL2GLWidget {
   void paintGL ();
   void modelTransform () ;
   void keyPressEvent(QKeyEvent* event);
+  void resizeGL (int width, int height);
+
 
 
   GLuint projLoc, viewLoc;
@@ -23,6 +25,7 @@ class MyGLWidget : public BL2GLWidget {
   GLuint VAO_HomerProves, VAO_Suelo;
 
   private:
+  float rav = 1;
   float rota_Homer = 45.0;
   int vertices_Suelo = 6;
   glm::vec3 centre_escena;

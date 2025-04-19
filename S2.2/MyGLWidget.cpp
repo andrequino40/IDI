@@ -88,13 +88,20 @@ void MyGLWidget::keyPressEvent(QKeyEvent* event)
   update();
 }
 
+void MyGLWidget::resizeGL (int width, int height){
+  rav = float (width) / float (height);
+  updateCamera();
+}
 
 void MyGLWidget::paintGL () 
 {
 // En cas de voler canviar els paràmetres del viewport, descomenteu la crida següent i
 // useu els paràmetres que considereu (els que hi ha són els de per defecte)
-//  glViewport (0, 0, ample, alt);
-  
+
+  // glViewport (0, 0, ample, alt);
+  // std::cerr << "ar: " <<  << std::endl; 
+  // std::cerr << width() << " " << height() << std::endl; 
+  // std::cerr << ">" << ample << " " << alt << std::endl; 
   // Esborrem el frame-buffer
   glClear (GL_COLOR_BUFFER_BIT);
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -243,10 +250,14 @@ void MyGLWidget::updateCamera() {
 
   float z_near = d - radi_escena;
   float z_far = d + radi_escena;
-  float ra = 1;
-  float fov = 2*glm::asin(radi_escena/d);
+  float fov;
+  float av = glm::asin(radi_escena/d);
+  if (rav >= 1)
+    fov = 2 * av;
+  else 
+    fov = 2 * glm::atan((glm::tan(av)/rav));
 
-  projectTransform(fov, ra, z_near, z_far);
+  projectTransform(fov, rav, z_near, z_far);
 }
 
 
