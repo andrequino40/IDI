@@ -220,6 +220,33 @@ void MyGLWidget::initializeGL()
   glEnable (GL_DEPTH_TEST);
 }
 
+void MyGLWidget::calculaCapsaModel (Model &p, float &escala, float alcadaDesitjada, glm::vec3 &centreBase)
+{
+  // Càlcul capsa contenidora i valors transformacions inicials
+  float minx, miny, minz, maxx, maxy, maxz;
+  minx = maxx = p.vertices()[0];
+  miny = maxy = p.vertices()[1];
+  minz = maxz = p.vertices()[2];
+  for (unsigned int i = 3; i < p.vertices().size(); i+=3)
+  {
+    if (p.vertices()[i+0] < minx)
+      minx = p.vertices()[i+0];
+    if (p.vertices()[i+0] > maxx)
+      maxx = p.vertices()[i+0];
+    if (p.vertices()[i+1] < miny)
+      miny = p.vertices()[i+1];
+    if (p.vertices()[i+1] > maxy)
+      maxy = p.vertices()[i+1];
+    if (p.vertices()[i+2] < minz)
+      minz = p.vertices()[i+2];
+    if (p.vertices()[i+2] > maxz)
+      maxz = p.vertices()[i+2];
+  }
+
+  escala = alcadaDesitjada/(maxy-miny);
+  centreBase[0] = (minx+maxx)/2.0; centreBase[1] = miny; centreBase[2] = (minz+maxz)/2.0;
+}
+
 void MyGLWidget::carregaShaders() { // declarem-lo també en MyGLWidget.h
     BL2GLWidget::carregaShaders(); // cridem primer al mètode de BL2GLWidget
     projLoc = glGetUniformLocation (program->programId(), "proj");

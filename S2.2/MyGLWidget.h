@@ -30,6 +30,7 @@ class MyGLWidget : public BL2GLWidget {
   int vertices_Suelo = 6;
   glm::vec3 centre_escena;
   float radi_escena;
+  void calculaCapsaModel (Model &p, float &escala, float alcadaDesitjada, glm::vec3 &CentreBase);
   void updateCamera();
   void calcAtributsEscena(glm::vec3 punt_min, glm::vec3 punt_max);
   void modelTransformSuelo() ;
