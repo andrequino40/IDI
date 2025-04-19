@@ -111,6 +111,18 @@ void MyGLWidget::keyPressEvent(QKeyEvent* event)
       rota_model -= 45.0;
       break;
     }
+    case Qt::Key_Z: {
+      fov_zoom -= 1.0;
+      updateCamera();
+      update();
+      break;
+    }
+    case Qt::Key_X: {
+      fov_zoom += 1.0;
+      updateCamera();
+      update();
+      break;
+    }
     default: event->ignore(); break;
   }
   update();
@@ -328,11 +340,13 @@ void MyGLWidget::updateCamera() {
   float z_far = d + radi_escena;
   float fov;
   float av = glm::asin(radi_escena/d);
+  // std::cerr << "anglew" << av << std::endl;
+
   if (rav >= 1)
     fov = 2 * av;
   else 
     fov = 2 * glm::atan((glm::tan(av)/rav));
-
+  fov += (float)glm::radians(fov_zoom);
   projectTransform(fov, rav, z_near, z_far);
 }
 

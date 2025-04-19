@@ -32,6 +32,7 @@ class MyGLWidget : public BL2GLWidget {
   int vertices_Suelo = 6;
   glm::vec3 centre_escena;
   float radi_escena;
+  float fov_zoom = 0.0;
   float theta = 0;
   float psi = 0;
   float xmouse = 0;
