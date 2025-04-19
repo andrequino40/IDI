@@ -152,13 +152,13 @@ void MyGLWidget::creaBuffersSuelo() {
     glm::vec3 Vertices[vertices_Suelo];  // Tres vèrtexs amb X, Y i Z
     int i = 0;
 // lado frente izquierda
-  Vertices[i++] = glm::vec3(-1.0, -1.0, -1.0);
-  Vertices[i++] = glm::vec3(-1.0, -1.0, 1.0);
-  Vertices[i++] = glm::vec3(1.0, -1.0, 1.0);
+  Vertices[i++] = glm::vec3(-2.0, -1.0, -2.0);
+  Vertices[i++] = glm::vec3(-2.0, -1.0, 2.0);
+  Vertices[i++] = glm::vec3(2.0, -1.0, 2.0);
   // lade fondo derecha
-  Vertices[i++] = glm::vec3(1.0, -1.0, 1.0);
-  Vertices[i++] = glm::vec3(1.0, -1.0, -1.0);
-  Vertices[i++] = glm::vec3(-1.0, -1.0, -1.0);
+  Vertices[i++] = glm::vec3(2.0, -1.0, 2.0);
+  Vertices[i++] = glm::vec3(2.0, -1.0, -2.0);
+  Vertices[i++] = glm::vec3(-2.0, -1.0, -2.0);
   
   // Creació del Vertex Array Object (VAO) que usarem per pintar
   glGenVertexArrays(1, &VAO_Suelo);
@@ -215,7 +215,7 @@ void MyGLWidget::carregaShaders() { // declarem-lo també en MyGLWidget.h
 void MyGLWidget::projectTransform (float fov, float ra, float z_near, float z_far) {
 // glm::perspective (FOV en radians, ra window, znear, zfar)
 // float)glm::radians()
-    glm::mat4 Proj = glm::perspective ((float)glm::radians(fov), ra, z_near, z_far);
+    glm::mat4 Proj = glm::perspective (fov, ra, z_near, z_far);
     glUniformMatrix4fv (projLoc, 1, GL_FALSE, &Proj[0][0]);
 }
 
@@ -230,6 +230,7 @@ void MyGLWidget:: calcAtributsEscena(glm::vec3 min, glm::vec3 max) {
 }
 
 void MyGLWidget::updateCamera() {
+  // valores por defecto de la escena de homer y el suelo
    calcAtributsEscena(glm::vec3(-2.0f, -1.0f, -2.0f), glm::vec3(2.0f, 1.0f, 2.0f));
 
   float d = radi_escena * 2;
