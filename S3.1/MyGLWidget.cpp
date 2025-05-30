@@ -78,3 +78,11 @@ void MyGLWidget::keyPressEvent(QKeyEvent* event) {
   update();
 }
 
+void MyGLWidget::iniMaterialTerra() {
+    // Donem valors al material del terra
+  amb = glm::vec3(0.0,0,0.2);
+  diff = glm::vec3(0.0,0,0.8);
+  spec = glm::vec3(1,1,1);
+  shin = 90;
+}
+
