@@ -13,9 +13,19 @@ uniform mat4 view;
 uniform mat4 TG;
 
 // Valors per als components que necessitem del focus de llum
-vec3 colorFocus = vec3(0.8, 0.8, 0.8);
 vec3 llumAmbient = vec3(0.2, 0.2, 0.2);
-vec3 posFocus = vec3(1, 0, 1);  // en SCA
+
+
+//vec3 colorFocus = vec3(0.8, 0.8, 0.8);
+//vec3 posFocus = vec3(1, 0, 1);  // en SCA
+
+
+  // Ara son uniform, els passem des de MyGLWidget
+uniform vec3 posFocus;
+uniform vec3 colorFocus;
+
+
+
 
 out vec3 fcolor;
 
@@ -55,8 +65,8 @@ vec3 Especular (vec3 NormSCO, vec3 L, vec4 vertSCO, vec3 colFocus)
     return (matspec * colFocus * shine); 
 }
 
-void main() {	
-
+void main()
+{	
   // PosVertex en SCO
     vec4 vertexSCO = view * TG * vec4(vertex, 1.0);
 
