@@ -86,38 +86,22 @@ void MyGLWidget::iniMaterialTerra() {
   shin = 90;
 }
 
-void MyGLWidget::carregaShaders() {
-  QOpenGLShader fs (QOpenGLShader::Fragment, this);
-  QOpenGLShader vs (QOpenGLShader::Vertex, this);
-  // Carreguem el codi dels fitxers i els compilem
-  fs.compileSourceFile("shaders/basicLlumShader.frag");
-  vs.compileSourceFile("shaders/basicLlumShader.vert");
-  // Creem el program
-  program = new QOpenGLShaderProgram(this);
-  // Li afegim els shaders corresponents
-  program->addShader(&fs);
-  program->addShader(&vs);
-  // Linkem el program
-  program->link();
-  // Indiquem que aquest és el program que volem usar
-  program->bind();
 
-  // Obtenim identificador per a l'atribut “vertex” del vertex shader
-  vertexLoc = glGetAttribLocation (program->programId(), "vertex");
-  // Obtenim identificador per a l'atribut “normal” del vertex shader
-  normalLoc = glGetAttribLocation (program->programId(), "normal");
-  // Obtenim identificador per a l'atribut “matamb” del vertex shader
-  matambLoc = glGetAttribLocation (program->programId(), "matamb");
-  // Obtenim identificador per a l'atribut “matdiff” del vertex shader
-  matdiffLoc = glGetAttribLocation (program->programId(), "matdiff");
-  // Obtenim identificador per a l'atribut “matspec” del vertex shader
-  matspecLoc = glGetAttribLocation (program->programId(), "matspec");
-  // Obtenim identificador per a l'atribut “matshin” del vertex shader
-  matshinLoc = glGetAttribLocation (program->programId(), "matshin");
+void MyGLWidget::iniFocus() {
 
-  // Demanem identificadors per als uniforms del vertex shader
-  transLoc = glGetUniformLocation (program->programId(), "TG");
-  projLoc = glGetUniformLocation (program->programId(), "proj");
-  viewLoc = glGetUniformLocation (program->programId(), "view");
-}
+    posFocus = glm::vec3(1, 0, 1);  // en SCA
+    colorFocus = glm::vec3(0.0, 0.8, 0.8);
+    
+    glUniform3fv(posFocusLoc, 1, &posFocus[0]);
+    glUniform3fv(colorFocusLoc, 1, &colorFocus[0]);
+  }
 
+  void MyGLWidget::initializeGL() {
+
+    BL3GLWidget::initializeGL();
+  
+    posFocusLoc = glGetUniformLocation (program->programId(), "posFocus");
+    colorFocusLoc = glGetUniformLocation (program->programId(), "colorFocus");
+  
+    iniFocus();
+  }

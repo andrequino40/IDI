@@ -12,8 +12,10 @@ class MyGLWidget : public BL3GLWidget {
     virtual void mouseMoveEvent(QMouseEvent *e);
     virtual void keyPressEvent(QKeyEvent* event);
     virtual void iniMaterialTerra();
-    virtual void carregaShaders();
-
+    virtual void initializeGL ( );
+    void iniFocus();
   private:
+    GLuint posFocusLoc, colorFocusLoc;
+    glm::vec3 posFocus, colorFocus;
     int printOglError(const char file[], int line, const char func[]);
 };
