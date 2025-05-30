@@ -12,6 +12,7 @@ class MyGLWidget : public BL3GLWidget {
     virtual void mouseMoveEvent(QMouseEvent *e);
     virtual void keyPressEvent(QKeyEvent* event);
     virtual void iniMaterialTerra();
+    virtual void carregaShaders();
 
   private:
     int printOglError(const char file[], int line, const char func[]);
