@@ -55,8 +55,26 @@ vec3 Especular (vec3 NormSCO, vec3 L, vec4 vertSCO, vec3 colFocus)
     return (matspec * colFocus * shine); 
 }
 
-void main()
-{	
-    fcolor = matdiff;
-    gl_Position = proj * view * TG * vec4 (vertex, 1.0);
+void main() {	
+
+  // PosVertex en SCO
+    vec4 vertexSCO = view * TG * vec4(vertex, 1.0);
+
+  // Normal en SCO
+    mat3 normalMatrix = inverse(transpose(mat3(view*TG)));
+    vec3 normalSCO = normalize(normalMatrix*normal);
+
+  // PosFocus en SCO
+    vec4 posFocusSCO = view * vec4(posFocus, 1.0);
+
+  // L en SCO
+    vec3 LSCO = normalize(posFocusSCO.xyz - vertexSCO.xyz);
+
+
+  // Calcul llum model Lambert
+    fcolor = Ambient() + 
+             Difus(normalSCO, LSCO, colorFocus);
+
+
+    gl_Position = proj * vertexSCO;
 }
