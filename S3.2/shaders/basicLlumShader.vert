@@ -21,7 +21,7 @@ vec3 llumAmbient = vec3(0.2, 0.2, 0.2);
 
 
   // Ara son uniform, els passem des de MyGLWidget
-uniform vec3 posFocus;
+uniform vec4 posFocusSCO;
 uniform vec3 colorFocus;
 
 
@@ -75,7 +75,7 @@ void main()
     vec3 normalSCO = normalize(normalMatrix*normal);
 
   // PosFocus en SCO
-    vec4 posFocusSCO = view * vec4(posFocus, 1.0);
+    // vec4 posFocusSCO = view * vec4(posFocus, 1.0);
 
   // L en SCO
     vec3 LSCO = normalize(posFocusSCO.xyz - vertexSCO.xyz);
