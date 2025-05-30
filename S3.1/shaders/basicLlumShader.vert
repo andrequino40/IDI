@@ -15,7 +15,7 @@ uniform mat4 TG;
 // Valors per als components que necessitem del focus de llum
 vec3 colorFocus = vec3(0.8, 0.8, 0.8);
 vec3 llumAmbient = vec3(0.2, 0.2, 0.2);
-vec3 posFocus = vec3(1, 1, 1);  // en SCA
+vec3 posFocus = vec3(1, 0, 1);  // en SCA
 
 out vec3 fcolor;
 
