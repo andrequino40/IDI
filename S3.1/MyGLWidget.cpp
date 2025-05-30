@@ -69,10 +69,17 @@ void MyGLWidget::mouseMoveEvent(QMouseEvent *e)
 void MyGLWidget::keyPressEvent(QKeyEvent* event) {
   makeCurrent();
   switch (event->key()) {
-  /*case : 
-      ...
+    case Qt::Key_K:
+      posFocus -= glm::vec3(0.1, 0.0, 0.0);
+      glUniform3fv(posFocusLoc, 1, &posFocus[0]);
+
       break;
-  */  
+    case Qt::Key_L:
+      posFocus += glm::vec3(0.1, 0.0, 0.0);
+      glUniform3fv(posFocusLoc, 1, &posFocus[0]);
+
+      break;
+   
     default: BL3GLWidget::keyPressEvent(event); break;
   }
   update();
