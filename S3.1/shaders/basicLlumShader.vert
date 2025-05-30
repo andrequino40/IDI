@@ -71,9 +71,10 @@ void main() {
     vec3 LSCO = normalize(posFocusSCO.xyz - vertexSCO.xyz);
 
 
-  // Calcul llum model Lambert
+  // Calcul llum model Phong
     fcolor = Ambient() + 
-             Difus(normalSCO, LSCO, colorFocus);
+             Difus(normalSCO, LSCO, colorFocus) +
+             Especular(normalSCO, LSCO, vertexSCO, colorFocus);
 
 
     gl_Position = proj * vertexSCO;
