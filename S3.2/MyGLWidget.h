@@ -15,7 +15,8 @@ class MyGLWidget : public BL3GLWidget {
     virtual void initializeGL ( );
     void iniFocus();
   private:
-    GLuint posFocusSCOLoc, colorFocusLoc;
+    GLuint posFocusSCOLoc, colorFocusLoc, llumAmbientLoc;
+    glm::vec3 llumAmbient;
     glm::vec3 colorFocus;
     glm::vec4 posFocusSCO;
     int printOglError(const char file[], int line, const char func[]);

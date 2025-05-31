@@ -97,10 +97,12 @@ void MyGLWidget::iniMaterialTerra() {
 void MyGLWidget::iniFocus() {
 
     posFocusSCO = glm::vec4(0, 0, 0, 1);  // en SCO
-    colorFocus = glm::vec3(0.0, 0.8, 0.8);
-    
+    colorFocus = glm::vec3(0.8, 0.8, 0.8);
+    llumAmbient = glm::vec3(1.0, 1.0, 1.0);
+
     glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
     glUniform3fv(colorFocusLoc, 1, &colorFocus[0]);
+    glUniform3fv(llumAmbientLoc, 1, &llumAmbient[0]);
   }
 
   void MyGLWidget::initializeGL() {
@@ -109,6 +111,7 @@ void MyGLWidget::iniFocus() {
   
     posFocusSCOLoc = glGetUniformLocation (program->programId(), "posFocusSCO");
     colorFocusLoc = glGetUniformLocation (program->programId(), "colorFocus");
+    llumAmbientLoc = glGetUniformLocation (program->programId(), "llumAmbient");
   
     iniFocus();
   }

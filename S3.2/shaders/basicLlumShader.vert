@@ -23,7 +23,6 @@ uniform mat4 view;
 uniform mat4 TG;
 
 // Valors per als components que necessitem del focus de llum
-vec3 llumAmbient = vec3(0.2, 0.2, 0.2);
 
 
 //vec3 colorFocus = vec3(0.8, 0.8, 0.8);
@@ -34,6 +33,7 @@ vec3 llumAmbient = vec3(0.2, 0.2, 0.2);
   // AHORA ESTARAN EN FS
 uniform vec4 posFocusSCO;
 uniform vec3 colorFocus;
+uniform vec3 llumAmbient;
 
 
 
