@@ -78,8 +78,8 @@ void MyGLWidget::keyPressEvent(QKeyEvent* event) {
     //   posFocusSCO += glm::vec4(0.1, 0.0, 0.0, 0.0);
     //   glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
       case Qt::Key_F:
-        focus_state = !focus_state;
-        setPosFocus(focus_state);
+        // focus_state = !focus_state;
+        // setPosFocus(focus_state);
       break;
    
     default: BL3GLWidget::keyPressEvent(event); break;
@@ -106,11 +106,18 @@ void MyGLWidget::setPosFocus(bool focus_set) {
 
 void MyGLWidget::iniFocus() {
     focus_state = true;
-    // posFocusSCO = glm::vec4(0, 0, 0, 1);  // en SCO
-    setPosFocus(true);
-    colorFocus = glm::vec3(0.8, 0.8, 0.8);
-    llumAmbient = glm::vec3(1.0, 1.0, 1.0);
+
+    posFocusSCO = View * glm::vec4(1, 1, 1, 1); // de SCA a SCO
+    posFocusSCOCam = glm::vec4(0, 0, 0, 1);  // en SCO
+    glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
+    glUniform4fv(posFocusSCOCamLoc, 1, &posFocusSCOCam[0]);
+
+    colorFocus = glm::vec3(0.0, 0.0, 0.8);
+    colorFocusCam = glm::vec3(0.8, 0.0, 0.0);
     glUniform3fv(colorFocusLoc, 1, &colorFocus[0]);
+    glUniform3fv(colorFocusCamLoc, 1, &colorFocusCam[0]);
+
+    llumAmbient = glm::vec3(1.0, 1.0, 1.0);
     glUniform3fv(llumAmbientLoc, 1, &llumAmbient[0]);
   }
 
@@ -120,6 +127,8 @@ void MyGLWidget::iniFocus() {
   
     posFocusSCOLoc = glGetUniformLocation (program->programId(), "posFocusSCO");
     colorFocusLoc = glGetUniformLocation (program->programId(), "colorFocus");
+    posFocusSCOCamLoc = glGetUniformLocation (program->programId(), "posFocusSCOCam");
+    colorFocusCamLoc = glGetUniformLocation (program->programId(), "colorFocusCam");
     llumAmbientLoc = glGetUniformLocation (program->programId(), "llumAmbient");
   
     iniFocus();

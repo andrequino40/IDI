@@ -16,10 +16,13 @@ class MyGLWidget : public BL3GLWidget {
     void iniFocus();
     void setPosFocus(bool focus_set);
   private:
-    GLuint posFocusSCOLoc, colorFocusLoc, llumAmbientLoc;
+    GLuint posFocusSCOLoc, colorFocusLoc, llumAmbientLoc, posFocusSCOCamLoc, colorFocusCamLoc;
+
     glm::vec3 llumAmbient;
     glm::vec3 colorFocus;
+    glm::vec3 colorFocusCam;
     glm::vec4 posFocusSCO;
+    glm::vec4 posFocusSCOCam;
     bool focus_state;
     int printOglError(const char file[], int line, const char func[]);
 };

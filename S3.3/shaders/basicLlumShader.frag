@@ -12,7 +12,9 @@ in vec3 matspecFS;
 in float matshinFS;
 
 uniform vec4 posFocusSCO;
+uniform vec4 posFocusSCOCam;
 uniform vec3 colorFocus;
+uniform vec3 colorFocusCam;
 uniform vec3 llumAmbient;
 
 vec3 Ambient() {
