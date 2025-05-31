@@ -112,8 +112,8 @@ void MyGLWidget::iniFocus() {
     glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
     glUniform4fv(posFocusSCOCamLoc, 1, &posFocusSCOCam[0]);
 
-    colorFocus = glm::vec3(0.0, 0.0, 0.8);
-    colorFocusCam = glm::vec3(0.8, 0.0, 0.0);
+    colorFocus = glm::vec3(0.0, 0.9, 0.9);
+    colorFocusCam = glm::vec3(0.5, 0.5, 0.5);
     glUniform3fv(colorFocusLoc, 1, &colorFocus[0]);
     glUniform3fv(colorFocusCamLoc, 1, &colorFocusCam[0]);
 

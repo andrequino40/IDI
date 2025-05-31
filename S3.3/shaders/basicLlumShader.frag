@@ -56,14 +56,17 @@ vec3 Especular (vec3 NormSCO, vec3 L, vec4 vertSCO, vec3 colFocus)
 void main()
 {	
     vec3 LSCO = normalize(posFocusSCO.xyz - vertexSCO.xyz);
+    vec3 LSCOCam = normalize(posFocusSCOCam.xyz - vertexSCO.xyz);
 
 	// VOLVEMOS A NORMALIZAR N
 	vec3 normalSCOFS = normalize(normalSCO);     
 
 	// Calcul llum model Phong
     vec3 fcolor = Ambient() + 
-             Difus(normalSCOFS, LSCO, colorFocus) +
-             Especular(normalSCOFS, LSCO, vertexSCO, colorFocus);
+             Difus(normalSCOFS, LSCO, colorFocus) + 
+             Difus(normalSCOFS, LSCOCam, colorFocusCam) +
+             Especular(normalSCOFS, LSCO, vertexSCO, colorFocus) +
+             Especular(normalSCOFS, LSCOCam, vertexSCO, colorFocusCam);
 
 	FragColor = vec4(fcolor,1);	
 }
