@@ -132,7 +132,7 @@ void MyGLWidget::setFocusEscena() {
   posFocusSCO = View * glm::vec4(deltaX, 0.5 + deltaY, 0, 1); // de SCA a SCO
   glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
   if (focusEscenaOn) {
-    colorFocus = glm::vec3(0.0, 0.9, 0.9);
+    colorFocus = glm::vec3(0.9, 0.9, 0.0);
   } else {
     colorFocus = glm::vec3(0.0);
   }
