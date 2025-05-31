@@ -97,6 +97,14 @@ void MyGLWidget::keyPressEvent(QKeyEvent* event) {
         deltaY -= 0.1;
         setFocusEscena();
       break;
+      case Qt::Key_1:
+        focusEscenaOn = !focusEscenaOn;
+        setFocusEscena();
+      break;
+      case Qt::Key_2:
+        focusCamOn = !focusCamOn;
+        setFocusCam();
+      break;
    
     default: BL3GLWidget::keyPressEvent(event); break;
   }
@@ -123,14 +131,28 @@ void MyGLWidget::setPosFocus(bool focus_set) {
 void MyGLWidget::setFocusEscena() {
   posFocusSCO = View * glm::vec4(deltaX, 0.5 + deltaY, 0, 1); // de SCA a SCO
   glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
+  if (focusEscenaOn) {
+    colorFocus = glm::vec3(0.0, 0.9, 0.9);
+  } else {
+    colorFocus = glm::vec3(0.0);
+  }
+  glUniform3fv(colorFocusLoc, 1, &colorFocus[0]);
 }
 
 void MyGLWidget::setFocusCam() {
   posFocusSCOCam = glm::vec4(0, 0, 0, 1);  // en SCO
   glUniform4fv(posFocusSCOCamLoc, 1, &posFocusSCOCam[0]);
+  if (focusCamOn) {
+    colorFocusCam = glm::vec3(0.5, 0.5, 0.5);
+  } else {
+    colorFocusCam = glm::vec3(0.0);
+  }
+  glUniform3fv(colorFocusCamLoc, 1, &colorFocusCam[0]);
 }
 
 void MyGLWidget::iniFocus() {
+    focusEscenaOn = true;
+    focusCamOn = true;
     focus_state = true;
     setFocusEscena();
     setFocusCam();
@@ -139,10 +161,10 @@ void MyGLWidget::iniFocus() {
     // glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
     // glUniform4fv(posFocusSCOCamLoc, 1, &posFocusSCOCam[0]);
 
-    colorFocus = glm::vec3(0.0, 0.9, 0.9);
-    colorFocusCam = glm::vec3(0.5, 0.5, 0.5);
-    glUniform3fv(colorFocusLoc, 1, &colorFocus[0]);
-    glUniform3fv(colorFocusCamLoc, 1, &colorFocusCam[0]);
+    // colorFocus = glm::vec3(0.0, 0.9, 0.9);
+    // colorFocusCam = glm::vec3(0.5, 0.5, 0.5);
+    // glUniform3fv(colorFocusLoc, 1, &colorFocus[0]);
+    // glUniform3fv(colorFocusCamLoc, 1, &colorFocusCam[0]);
 
     llumAmbient = glm::vec3(1.0, 1.0, 1.0);
     glUniform3fv(llumAmbientLoc, 1, &llumAmbient[0]);

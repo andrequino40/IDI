@@ -21,6 +21,7 @@ class MyGLWidget : public BL3GLWidget {
   private:
     GLuint posFocusSCOLoc, colorFocusLoc, llumAmbientLoc, posFocusSCOCamLoc, colorFocusCamLoc;
 
+    bool focusEscenaOn, focusCamOn;
     float deltaY, deltaX;
     glm::vec3 llumAmbient;
     glm::vec3 colorFocus;
