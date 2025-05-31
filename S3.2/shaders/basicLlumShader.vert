@@ -8,6 +8,16 @@ in vec3 matdiff;
 in vec3 matspec;
 in float matshin;
 
+ // PASAMOS AL FS
+out vec4 vertexSCO; // VOLVER A NORMALIZAR
+out vec3 normalSCO; // VOLVER A NORMALIZAR
+
+ // PASAMOS AL FS
+out vec3 matambFS;
+out vec3 matdiffFS;
+out vec3 matspecFS;
+out float matshinFS;
+
 uniform mat4 proj;
 uniform mat4 view;
 uniform mat4 TG;
@@ -21,6 +31,7 @@ vec3 llumAmbient = vec3(0.2, 0.2, 0.2);
 
 
   // Ara son uniform, els passem des de MyGLWidget
+  // AHORA ESTARAN EN FS
 uniform vec4 posFocusSCO;
 uniform vec3 colorFocus;
 
@@ -68,16 +79,17 @@ vec3 Especular (vec3 NormSCO, vec3 L, vec4 vertSCO, vec3 colFocus)
 void main()
 {	
   // PosVertex en SCO
-    vec4 vertexSCO = view * TG * vec4(vertex, 1.0);
+    vertexSCO = view * TG * vec4(vertex, 1.0);
 
   // Normal en SCO
     mat3 normalMatrix = inverse(transpose(mat3(view*TG)));
-    vec3 normalSCO = normalize(normalMatrix*normal);
+    normalSCO = normalize(normalMatrix*normal);
 
   // PosFocus en SCO
     // vec4 posFocusSCO = view * vec4(posFocus, 1.0);
 
   // L en SCO
+  // AHORA ESTARA EN FS
     vec3 LSCO = normalize(posFocusSCO.xyz - vertexSCO.xyz);
 
 
