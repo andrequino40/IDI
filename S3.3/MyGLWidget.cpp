@@ -81,6 +81,22 @@ void MyGLWidget::keyPressEvent(QKeyEvent* event) {
         // focus_state = !focus_state;
         // setPosFocus(focus_state);
       break;
+      case Qt::Key_Left:
+        deltaX -= 0.1;
+        setFocusEscena();
+      break;
+      case Qt::Key_Right:
+        deltaX += 0.1;
+        setFocusEscena();
+      break;
+      case Qt::Key_Up:
+        deltaY += 0.1;
+        setFocusEscena();
+      break;
+      case Qt::Key_Down:
+        deltaY -= 0.1;
+        setFocusEscena();
+      break;
    
     default: BL3GLWidget::keyPressEvent(event); break;
   }
@@ -104,12 +120,17 @@ void MyGLWidget::setPosFocus(bool focus_set) {
   glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
 }
 
+void MyGLWidget::setFocusEscena() {
+  posFocusSCO = View * glm::vec4(deltaX, 0.5 + deltaY, 0, 1); // de SCA a SCO
+  glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
+}
+
 void MyGLWidget::iniFocus() {
     focus_state = true;
-
-    posFocusSCO = View * glm::vec4(1, 1, 1, 1); // de SCA a SCO
+    setFocusEscena();
+    // posFocusSCO = View * glm::vec4(0, 0.5, 0, 1); // de SCA a SCO
     posFocusSCOCam = glm::vec4(0, 0, 0, 1);  // en SCO
-    glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
+    // glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
     glUniform4fv(posFocusSCOCamLoc, 1, &posFocusSCOCam[0]);
 
     colorFocus = glm::vec3(0.0, 0.9, 0.9);
@@ -132,12 +153,17 @@ void MyGLWidget::iniFocus() {
     llumAmbientLoc = glGetUniformLocation (program->programId(), "llumAmbient");
   
     iniFocus();
+
+    deltaY = 0.0;
+    deltaX = 0.0;
   }
 
   void MyGLWidget::modelTransformPatricio() {
     // escala = 2.0
     float new_escala = escala * 0.3 / 2.0;
-    TG = glm::scale(glm::mat4(1.f), glm::vec3(new_escala, new_escala, new_escala));
+    TG = glm::mat4(1.f);
+    TG = glm::translate(TG, glm::vec3(deltaX, deltaY, 0.0));
+    TG = glm::scale(TG, glm::vec3(new_escala, new_escala, new_escala));
     TG = glm::translate(TG, -centrePatr);
     
     glUniformMatrix4fv (transLoc, 1, GL_FALSE, &TG[0][0]);

@@ -14,11 +14,13 @@ class MyGLWidget : public BL3GLWidget {
     virtual void iniMaterialTerra();
     virtual void initializeGL ( );
     virtual void modelTransformPatricio();
+    void setFocusEscena();
     void iniFocus();
     void setPosFocus(bool focus_set);
   private:
     GLuint posFocusSCOLoc, colorFocusLoc, llumAmbientLoc, posFocusSCOCamLoc, colorFocusCamLoc;
 
+    float deltaY, deltaX;
     glm::vec3 llumAmbient;
     glm::vec3 colorFocus;
     glm::vec3 colorFocusCam;
