@@ -133,3 +133,12 @@ void MyGLWidget::iniFocus() {
   
     iniFocus();
   }
+
+  void BL3GLWidget::modelTransformPatricio ()
+{
+  TG = glm::scale(glm::mat4(1.f), glm::vec3(escala, escala, escala));
+  TG = glm::translate(TG, -centrePatr);
+  
+  glUniformMatrix4fv (transLoc, 1, GL_FALSE, &TG[0][0]);
+}
+

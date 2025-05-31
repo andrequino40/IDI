@@ -13,6 +13,7 @@ class MyGLWidget : public BL3GLWidget {
     virtual void keyPressEvent(QKeyEvent* event);
     virtual void iniMaterialTerra();
     virtual void initializeGL ( );
+    virtual void modelTransofrmPatricio();
     void iniFocus();
     void setPosFocus(bool focus_set);
   private:
