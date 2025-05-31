@@ -69,15 +69,17 @@ void MyGLWidget::mouseMoveEvent(QMouseEvent *e)
 void MyGLWidget::keyPressEvent(QKeyEvent* event) {
   makeCurrent();
   switch (event->key()) {
-    case Qt::Key_K:
-      posFocusSCO -= glm::vec4(0.1, 0.0, 0.0, 0.0);
-      glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
+    // case Qt::Key_K:
+    //   posFocusSCO -= glm::vec4(0.1, 0.0, 0.0, 0.0);
+    //   glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
 
-      break;
-    case Qt::Key_L:
-      posFocusSCO += glm::vec4(0.1, 0.0, 0.0, 0.0);
-      glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
-
+    //   break;
+    // case Qt::Key_L:
+    //   posFocusSCO += glm::vec4(0.1, 0.0, 0.0, 0.0);
+    //   glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
+      case Qt::Key_F:
+        focus_state = !focus_state;
+        setPosFocus(focus_state);
       break;
    
     default: BL3GLWidget::keyPressEvent(event); break;
@@ -93,14 +95,21 @@ void MyGLWidget::iniMaterialTerra() {
   shin = 90;
 }
 
+void MyGLWidget::setPosFocus(bool focus_set) {
+  if (focus_set) {
+    posFocusSCO = glm::vec4(0, 0, 0, 1); // en SCO
+  } else {
+    posFocusSCO = View * glm::vec4(1, 1, 1, 1); // de SCA a SCO
+  }
+  glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
+}
 
 void MyGLWidget::iniFocus() {
-
-    posFocusSCO = glm::vec4(0, 0, 0, 1);  // en SCO
+    focus_state = true;
+    // posFocusSCO = glm::vec4(0, 0, 0, 1);  // en SCO
+    setPosFocus(true);
     colorFocus = glm::vec3(0.8, 0.8, 0.8);
     llumAmbient = glm::vec3(1.0, 1.0, 1.0);
-
-    glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
     glUniform3fv(colorFocusLoc, 1, &colorFocus[0]);
     glUniform3fv(llumAmbientLoc, 1, &llumAmbient[0]);
   }

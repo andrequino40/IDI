@@ -14,10 +14,12 @@ class MyGLWidget : public BL3GLWidget {
     virtual void iniMaterialTerra();
     virtual void initializeGL ( );
     void iniFocus();
+    void setPosFocus(bool focus_set);
   private:
     GLuint posFocusSCOLoc, colorFocusLoc, llumAmbientLoc;
     glm::vec3 llumAmbient;
     glm::vec3 colorFocus;
     glm::vec4 posFocusSCO;
+    bool focus_state;
     int printOglError(const char file[], int line, const char func[]);
 };
