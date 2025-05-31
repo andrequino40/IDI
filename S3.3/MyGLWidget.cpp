@@ -171,7 +171,6 @@ void MyGLWidget::iniFocus() {
   }
 
   void MyGLWidget::initializeGL() {
-
     BL3GLWidget::initializeGL();
   
     posFocusSCOLoc = glGetUniformLocation (program->programId(), "posFocusSCO");
@@ -184,6 +183,8 @@ void MyGLWidget::iniFocus() {
 
     deltaY = 0.0;
     deltaX = 0.0;
+
+    glEnable(GL_CULL_FACE);
   }
 
   void MyGLWidget::modelTransformPatricio() {
