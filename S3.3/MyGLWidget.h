@@ -15,6 +15,7 @@ class MyGLWidget : public BL3GLWidget {
     virtual void initializeGL ( );
     virtual void modelTransformPatricio();
     void setFocusEscena();
+    void setFocusCam();
     void iniFocus();
     void setPosFocus(bool focus_set);
   private:

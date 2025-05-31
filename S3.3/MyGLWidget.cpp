@@ -125,13 +125,19 @@ void MyGLWidget::setFocusEscena() {
   glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
 }
 
+void MyGLWidget::setFocusCam() {
+  posFocusSCOCam = glm::vec4(0, 0, 0, 1);  // en SCO
+  glUniform4fv(posFocusSCOCamLoc, 1, &posFocusSCOCam[0]);
+}
+
 void MyGLWidget::iniFocus() {
     focus_state = true;
     setFocusEscena();
+    setFocusCam();
     // posFocusSCO = View * glm::vec4(0, 0.5, 0, 1); // de SCA a SCO
-    posFocusSCOCam = glm::vec4(0, 0, 0, 1);  // en SCO
+    // posFocusSCOCam = glm::vec4(0, 0, 0, 1);  // en SCO
     // glUniform4fv(posFocusSCOLoc, 1, &posFocusSCO[0]);
-    glUniform4fv(posFocusSCOCamLoc, 1, &posFocusSCOCam[0]);
+    // glUniform4fv(posFocusSCOCamLoc, 1, &posFocusSCOCam[0]);
 
     colorFocus = glm::vec3(0.0, 0.9, 0.9);
     colorFocusCam = glm::vec3(0.5, 0.5, 0.5);
